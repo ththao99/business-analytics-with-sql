@@ -1,5 +1,5 @@
 
-------- Yêu cầu 1 ------
+-- 1. Sự tăng trưởng về mặt số lượng trong website sessions và đơn hàng theo từng quý
 SELECT 
 Year(ws.created_at) as yr,
 quarter(ws.created_at) as qtr,
@@ -11,7 +11,7 @@ On ws.website_session_id=o.website_session_id
 Group by 1,2;
 
 
---------- Yêu cầu 2-------------
+-- 2. Tỷ lệ chuyển đổi phiên thành đơn đặt hàng, doanh thu trên mỗi đơn đặt hàng và doanh thu trên mỗi phiên
 SELECT 
 Year(ws.created_at) as yr,
 quarter(ws.created_at) as qtr,
@@ -23,7 +23,7 @@ Left join orders as o
 On ws.website_session_id=o.website_session_id
 Group by 1,2;
 
---------- Yêu cầu 3-------------
+-- 3. Số lượng đơn hàng phân theo các chương trình marketing
 Create temporary table order_websession_detail
 SELECT 
 Year(ws.created_at) as yr,
@@ -50,7 +50,7 @@ Group by 1,2;
 
 
 
---------------------------- yêu cầu 4 ---------------------------
+-- 4. Tỷ lệ chuyển đổi thành đơn hàng phân theo các chương trình marketing
 SELECT
 yr, 
 qtr,
@@ -62,7 +62,7 @@ count(distinct case when utm_source is null AND http_referer is null then order_
 From order_websession_detail
 Group by 1,2;
 
-------------------------- Yêu cầu 5 ------------------------------------
+-- 5. Doanh thu và lợi nhuận theo sản phẩm, tổng doanh thu, tổng lợi nhuận của tất cả các sản phẩm
 
 CREATE temporary table product_rev_margin
 SELECT 
@@ -93,7 +93,7 @@ SUM(price_usd)-SUM(cogs_usd) as total_margin
 From product_rev_margin
 Group by 1,2;
 
---------------------- yêu cầu 6 --------------------
+-- 6. Tỉ lệ session click qua trang /products
 
 drop table if exists product_sessions;
 create temporary table product_sessions
@@ -145,7 +145,7 @@ FROM product_to_orders
 GROUP by 1,2;
 
 
---------------------- yêu cầu 7 --------------------
+-- 7. Tính số lượng các mặt hàng được mua kèm theo, từ đó thể hiện mức độ hiệu quả của các cặp sản phẩm được bán kèm
 
 SELECT * from orders;
 SELECt distinct * from order_items;
@@ -181,13 +181,6 @@ count(distinct case when secondary_product_id='4' then order_id else null end)/c
 From final_xsell
 Group by primary_product_id; 
 
------------------ Yêu cầu 8: Nhận xét -------------------
--------- Từ bảng tổng số phiên và đơn hàng, ta có thể thấy số phiên và số lượng đơn hàng của công ty tăng đều qua các năm. Ngoại trừ tháng cuối năm 2013 có sự sụt giảm nhẹ nhưng sau đó số lượng đơn hàng lại tăng đều trở lại. 
----- --- Ngoài ra ta cũng có thể thấy công ty đang thực hiện tốt trong việc marketing sử dụng công cụ gsearch, chiến dịch non-brand. Bằng chứng là số đơn đặng hàng qua công cụ gsearch-nonbrand nhiều hơn nhiều so với ở các công cụ và các campaign khác. 
--- Tuy vậy, khi xét về tỉ lệ chuyển đổi đơn hàng thì những phương thức khác như bsearch-nonbrand cũng có tỉ lệ chuyển đổi xấp xỉ với gsearch, nonbrand. Nghĩa là nhưng công cụ này cũng đã được khác thác một cách hợp lý và đã tạo ra một lượng đơn hàng cho doanh nghiệp. 
--- Vì vậy, trong tương lại doanh nghiệp có thể tiếp tực chọn những phương thức marketing cũ. 
-------- Nhìn vào bảng đơn hàng bán kèm ta có thể thấy sản phẩm thứ 4 thường được mua kèm với các sản phẩm khác nhiều hơn là mua lẻ mình nó. Vì vậy doanh nghiệp có thể phát triển sản phẩm thứ 4 như 1 sản phẩm mua kèm.
- 
 
 
 
