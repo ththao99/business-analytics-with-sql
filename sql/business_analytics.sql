@@ -1,5 +1,5 @@
 
--- 1. Sự tăng trưởng về mặt số lượng trong website sessions và đơn hàng theo từng quý
+-- 1.The increasing number of website sessions and orders in each quarter
 SELECT 
 Year(ws.created_at) as yr,
 quarter(ws.created_at) as qtr,
@@ -11,7 +11,7 @@ On ws.website_session_id=o.website_session_id
 Group by 1,2;
 
 
--- 2. Tỷ lệ chuyển đổi phiên thành đơn đặt hàng, doanh thu trên mỗi đơn đặt hàng và doanh thu trên mỗi phiên
+-- 2. Order conversion rate and revenue per each order and per each session 
 SELECT 
 Year(ws.created_at) as yr,
 quarter(ws.created_at) as qtr,
@@ -23,7 +23,7 @@ Left join orders as o
 On ws.website_session_id=o.website_session_id
 Group by 1,2;
 
--- 3. Số lượng đơn hàng phân theo các chương trình marketing
+-- 3. The number of orders by marketing campaigns
 Create temporary table order_websession_detail
 SELECT 
 Year(ws.created_at) as yr,
@@ -50,7 +50,7 @@ Group by 1,2;
 
 
 
--- 4. Tỷ lệ chuyển đổi thành đơn hàng phân theo các chương trình marketing
+-- 4. Order conversion rate by marketing campaign
 SELECT
 yr, 
 qtr,
@@ -62,7 +62,7 @@ count(distinct case when utm_source is null AND http_referer is null then order_
 From order_websession_detail
 Group by 1,2;
 
--- 5. Doanh thu và lợi nhuận theo sản phẩm, tổng doanh thu, tổng lợi nhuận của tất cả các sản phẩm
+-- 5.Revenue and profit by products
 
 CREATE temporary table product_rev_margin
 SELECT 
@@ -93,7 +93,7 @@ SUM(price_usd)-SUM(cogs_usd) as total_margin
 From product_rev_margin
 Group by 1,2;
 
--- 6. Tỉ lệ session click qua trang /products
+-- 6. Click-through rate 
 
 drop table if exists product_sessions;
 create temporary table product_sessions
@@ -145,7 +145,7 @@ FROM product_to_orders
 GROUP by 1,2;
 
 
--- 7. Tính số lượng các mặt hàng được mua kèm theo, từ đó thể hiện mức độ hiệu quả của các cặp sản phẩm được bán kèm
+-- 7. The number of cross-sell products, and performance of cross-sell products 
 
 SELECT * from orders;
 SELECt distinct * from order_items;
