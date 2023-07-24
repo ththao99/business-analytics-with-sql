@@ -53,6 +53,7 @@ Result:
 ### 3. The number of orders by marketing campaigns
 
 MySQL code: 
+
 Create temporary table order_websession_detail
 
 SELECT 
@@ -100,6 +101,7 @@ Result:
 ### 4. Order conversion rate by the marketing campaigns
 
 MySQL code: 
+
 SELECT
 yr, 
 qtr,
@@ -174,7 +176,7 @@ Result:
 
 ![image](https://github.com/ththao99/business-analytics-with-sql/assets/135719243/8ec71c3d-3d41-4e1c-85ad-d387b11b2b72)
 
-### 6. Click-through rate for /products page
+### 6. The click-through rate for /products page
 MySQL code: 
 
 drop table if exists product_sessions;
@@ -263,6 +265,7 @@ Result:
 ### 7. The number of cross-sell products, and performance of cross-sell products 
 
 MySQL code: 
+
 drop table if exists xsell_orders;
 
 create temporary table xsell_orders
