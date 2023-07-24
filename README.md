@@ -6,24 +6,17 @@ Find the total sessions and total orders divided by time.
 
 MySQL code: 
 SELECT 
-
 Year(ws.created_at) as yr,
-
 quarter(ws.created_at) as qtr,
-
 count(distinct ws.website_session_id) as sessions,
-
 count(distinct o.order_id) as orders
-
 from website_sessions as ws
-
 Left join orders as o
-
 On ws.website_session_id=o.website_session_id
-
 Group by 1,2;
 
 Result: 
+
 ![image](https://github.com/ththao99/business-analytics-with-sql/assets/135719243/8ebf0758-a197-4406-9d27-1b7619a19f61)
 
 ### 2. Order conversion rate and revenue per each order and per each session 
