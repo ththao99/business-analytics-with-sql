@@ -5,9 +5,13 @@ The given dataset of this project is about a website e-commerce website. A numbe
 Find the total sessions and total orders divided by time. 
 
 MySQL code: 
+
 SELECT 
+
 Year(ws.created_at) as yr,
+
 quarter(ws.created_at) as qtr,
+
 count(distinct ws.website_session_id) as sessions,
 count(distinct o.order_id) as orders
 from website_sessions as ws
