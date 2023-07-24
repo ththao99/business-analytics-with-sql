@@ -69,6 +69,8 @@ Left join orders as o
 
 On ws.website_session_id=o.website_session_id;
 
+***
+
 SELECT
 yr, 
 qtr,
@@ -138,6 +140,7 @@ Left join products as p
 
 On oi.product_id=p.product_id;
 
+*** 
 
 SELECT * from product_rev_margin;
 SELECT
@@ -191,11 +194,15 @@ On ws.website_session_id=wp.website_session_id
 
 Where wp.pageview_url='/products';
 
+***
+
 SELECT * from product_sessions;
 
 drop table if exists next_pageview_ids;
 
 CREATE temporary table next_pageview_ids
+
+*** 
 
 SELECT 
 yr,
@@ -214,6 +221,8 @@ AND product_pageview_id<wp.website_pageview_id
 
 Group by yr,mo,ps.website_session_id,product_pageview_id;
 
+***
+
 SELECT * from next_pageview_ids;
 
 create temporary table product_to_orders
@@ -229,6 +238,7 @@ On npi.website_session_id=o.website_session_id;
 
 SELECT * from product_to_orders;
 
+***
 
 select yr, mo, 
 
@@ -272,7 +282,7 @@ On o.order_id=oi.order_id
 
 Where o.created_at>='2014-12-05';
 
-SELECT * from xsell_orders;
+***
 
 drop table if exists final_xsell;
 create temporary table final_xsell
@@ -283,8 +293,7 @@ from xsell_orders
 
 Group by order_id;
 
-SELECT * from final_xsell;
-
+***
 
 SELECT
 
