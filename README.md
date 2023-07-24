@@ -174,7 +174,7 @@ Result:
 
 ![image](https://github.com/ththao99/business-analytics-with-sql/assets/135719243/8ec71c3d-3d41-4e1c-85ad-d387b11b2b72)
 
-### 6. Click-through rate 
+### 6. Click-through rate for /products page
 MySQL code: 
 
 drop table if exists product_sessions;
